@@ -41,6 +41,10 @@ class World {
             return entities[index];
         }
 
+        size_t getEntityCount() const {
+            return entities.size();
+        }
+
         void loop() {
             while(window.isOpen()) {
                 render();

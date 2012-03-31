@@ -17,6 +17,8 @@
     <ClInclude Include="..\..\..\src\Entity.h" />
     <ClInclude Include="..\..\..\src\Everything.h" />
     <ClInclude Include="..\..\..\src\Renderable.h" />
+    <ClInclude Include="..\..\..\src\Thought.h" />
+    <ClInclude Include="..\..\..\src\Word.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
