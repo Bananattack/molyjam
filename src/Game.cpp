@@ -1,7 +1,7 @@
-#include <SFML/Graphics.hpp>
-#include <vector>
-
-#include "Everything.h"
+#include "Common.h"
+#include "World.h"
+#include "Entity.h"
+#include "Word.h"
 
 int main(int argc, char * argv [] ) {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Molyjam!");
