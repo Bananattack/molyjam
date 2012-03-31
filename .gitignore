@@ -16,4 +16,5 @@ vs2010/molyjam/*/Release/
 *.sbr
 *.log
 *.opensdf
+*.sdf
 *.ipch
