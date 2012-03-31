@@ -26,7 +26,7 @@ class Word : public Entity {
             window.draw(text);
         }
 
-        void update(World& world, float dt) {
+        void step(World& world) {
             text.move(velocity);
             if(!world.screen.intersects(text.getGlobalBounds())) {
                 text.setPosition(sf::Vector2f(world.resolution) / 2.0f );

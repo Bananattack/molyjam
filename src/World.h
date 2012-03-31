@@ -3,6 +3,10 @@
 
 class World {
     private:
+        static const int MAX_FRAME_GAP = 3;
+
+        int lastUpdateTime;
+        sf::Clock clock;
         sf::RenderWindow& window;
 
     public:
@@ -11,11 +15,10 @@ class World {
         std::vector<std::shared_ptr<Entity>> entities;
 
         World(sf::RenderWindow& window)
-            : window(window),
+            : lastUpdateTime(0),
+            window(window),
             resolution(window.getSize()),
-            screen(sf::Vector2f(0, 0), resolution) {
-
-        }
+            screen(sf::Vector2f(0, 0), resolution) { }
 
         ~World() { }
 
@@ -23,30 +26,44 @@ class World {
             entities.push_back(entity);
         }
 
+        void loop() {
+            while(window.isOpen()) {
+                render();
+                update();
+            }
+        }
+
+    private:
         void render() {
             window.clear();
-            for(size_t i = 0; i != entities.size(); ++i) {
-                entities[i]->render(window);
+            for(auto it = entities.begin(), end = entities.end(); it != end; ++it) {
+                (*it)->render(window);
             }
             window.display();
         }
 
-        void update(float dt) {
-            sf::Event event;
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
-                    window.close();
+        void update() {
+            int time = clock.getElapsedTime().asMilliseconds() / 10;
+            int frames = std::min(time - lastUpdateTime, MAX_FRAME_GAP);
+            if(frames > 0) {
+                for(int i = 0; i < frames; ++i) {
+                    step();
                 }
-            }
-            for(size_t i = 0; i != entities.size(); ++i) {
-                entities[i]->update(*this, dt);
+                lastUpdateTime = time;
+            } else {
+                sf::sleep(sf::milliseconds(5));
             }
         }
 
-        void loop() {
-            while (window.isOpen()) {
-                render();
-                update(1.0); // TODO.
+        void step() {
+            sf::Event event;
+            while(window.pollEvent(event)) {
+                if(event.type == sf::Event::Closed) {
+                    window.close();
+                }
+            }
+            for(auto it = entities.begin(), end = entities.end(); it != end; ++it) {
+                (*it)->step(*this);
             }
         }
 };
