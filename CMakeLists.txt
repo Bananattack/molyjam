@@ -9,7 +9,10 @@ find_package(SFML 2.0 REQUIRED system window graphics audio)
 include_directories(${SFML_INCLUDE_DIR})
 
 add_executable(Game
-  src/Game.cpp
+    src/Game.cpp
+    src/Everything.h
+    src/Renderable.h
+    src/Entity.h
 )
 
 target_link_libraries(Game ${SFML_LIBRARIES})

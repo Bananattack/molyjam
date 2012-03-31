@@ -1,27 +1,23 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#include <cstdlib>
-#include <cmath>
-
-float randf() {
-    return ( (double) rand() / double(RAND_MAX) );
-}
+#include "Everything.h"
 
 int main(int argc, char * argv [] ) {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Molyjam!");
     sf::FloatRect screen( sf::Vector2f(0, 0), sf::Vector2f( window.getSize() ) );
 
     std::string dict[] = {"hello", "world", "foo", "bar", "magic", "molyjam!", "stuff"};
-
-    sf::Text words[7];
+    size_t count = 256;
+    sf::Text words[count];
     std::vector<sf::Vector2f> vels;
 
-    for( size_t i = 0; i < 7; ++i ) {
-        words[i] = sf::Text(dict[i]);
+    for( size_t i = 0; i < count; ++i ) {
+        words[i] = sf::Text(dict[i % 7]);
         words[i].setPosition( sf::Vector2f( window.getSize() ) / 2.0f );
         float r = randf() * 2 * M_PI;
-        vels.push_back(sf::Vector2f( sin(r), -cos(r) ) );
+        float mag = 2.0f + randf() * 4.0f;
+        vels.push_back(sf::Vector2f( mag * sin(r), mag * -cos(r) ) );
     }
 
     while (window.isOpen()) {
@@ -34,12 +30,13 @@ int main(int argc, char * argv [] ) {
 
         window.clear();
         // draw our shit
-        for( size_t i = 0; i < 7; ++i ) {
+        for( size_t i = 0; i < count; ++i ) {
             words[i].move(vels[i]);
             if( !screen.intersects( words[i].getGlobalBounds() ) ) {
                 words[i].setPosition( sf::Vector2f( window.getSize() ) / 2.0f );
                 float r = randf() * 2 * M_PI;
-                vels[i] = sf::Vector2f( sin(r), -cos(r) );
+                float mag = 2.0f + randf() * 4.0f;
+                vels[i] = sf::Vector2f( mag * sin(r), mag * -cos(r) );
             }
             window.draw(words[i]);
         }
