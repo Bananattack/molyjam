@@ -14,6 +14,4 @@ float randf() {
     return float(rand()) / float(RAND_MAX);
 }
 
-extern World world;
-
 #endif/*EVERYTHING_H_INCLUDED*/
