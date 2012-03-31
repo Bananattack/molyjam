@@ -28,8 +28,8 @@ class Word : public Entity {
 
         void step(World& world) {
             text.move(velocity);
-            if(!world.screen.intersects(text.getGlobalBounds())) {
-                text.setPosition(sf::Vector2f(world.resolution) / 2.0f );
+            if(!world.getScreen().intersects(text.getGlobalBounds())) {
+                text.setPosition(sf::Vector2f(world.getResolution()) / 2.0f );
                 float r = randf() * 2 * M_PI;
                 float mag = 2.0f + randf() * 4.0f;
                 velocity = sf::Vector2f(mag * sin(r), mag * -cos(r));

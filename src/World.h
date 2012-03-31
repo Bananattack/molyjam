@@ -8,12 +8,11 @@ class World {
         int lastUpdateTime;
         sf::Clock clock;
         sf::RenderWindow& window;
-
-    public:
         sf::Vector2f resolution;
         sf::FloatRect screen;
         std::vector<std::shared_ptr<Entity>> entities;
 
+    public:
         World(sf::RenderWindow& window)
             : lastUpdateTime(0),
             window(window),
@@ -22,8 +21,24 @@ class World {
 
         ~World() { }
 
-        void addEntity(const std::shared_ptr<Entity>& entity) {
+        const sf::Vector2f& getResolution() const {
+            return resolution;
+        }
+
+        const sf::FloatRect& getScreen() const {
+            return screen;
+        }
+
+        void addEntity(std::shared_ptr<Entity>& entity) {
             entities.push_back(entity);
+        }
+
+        const std::shared_ptr<Entity>& entityAt(size_t index) const {
+            return entities[index];
+        }
+
+        std::shared_ptr<Entity>& entityAt(size_t index) {
+            return entities[index];
         }
 
         void loop() {
