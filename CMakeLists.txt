@@ -13,6 +13,7 @@ add_executable(Game
     src/Everything.h
     src/Renderable.h
     src/Entity.h
+    src/World.h
 )
 
 target_link_libraries(Game ${SFML_LIBRARIES})

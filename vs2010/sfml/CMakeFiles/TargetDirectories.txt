@@ -1,0 +1,8 @@
+C:/Interests/Development/C++/sfmlbin/CMakeFiles/ALL_BUILD.dir
+C:/Interests/Development/C++/sfmlbin/CMakeFiles/ZERO_CHECK.dir
+C:/Interests/Development/C++/sfmlbin/src/SFML/Audio/CMakeFiles/sfml-audio.dir
+C:/Interests/Development/C++/sfmlbin/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir
+C:/Interests/Development/C++/sfmlbin/src/SFML/Main/CMakeFiles/sfml-main.dir
+C:/Interests/Development/C++/sfmlbin/src/SFML/Network/CMakeFiles/sfml-network.dir
+C:/Interests/Development/C++/sfmlbin/src/SFML/System/CMakeFiles/sfml-system.dir
+C:/Interests/Development/C++/sfmlbin/src/SFML/Window/CMakeFiles/sfml-window.dir

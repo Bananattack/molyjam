@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "molyjam", "molyjam\molyjam.vcxproj", "{DFB06046-2C4C-4B49-A13D-7546305D8255}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFB06046-2C4C-4B49-A13D-7546305D8255}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DFB06046-2C4C-4B49-A13D-7546305D8255}.Debug|Win32.Build.0 = Debug|Win32
+		{DFB06046-2C4C-4B49-A13D-7546305D8255}.Release|Win32.ActiveCfg = Release|Win32
+		{DFB06046-2C4C-4B49-A13D-7546305D8255}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

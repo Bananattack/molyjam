@@ -3,12 +3,17 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <vector>
+#include <memory>
 
 #include "Renderable.h"
 #include "Entity.h"
+#include "World.h"
 
 float randf() {
-    return ( (double) rand() / double(RAND_MAX) );
+    return float(rand()) / float(RAND_MAX);
 }
+
+extern World world;
 
 #endif/*EVERYTHING_H_INCLUDED*/
