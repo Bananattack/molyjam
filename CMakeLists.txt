@@ -18,6 +18,7 @@ add_executable(Game
     src/World.h
     src/World.cpp
     src/Word.h
+    src/Word.cpp
     src/Thought.h
 )
 

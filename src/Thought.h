@@ -4,7 +4,7 @@
 class Thought {
     private:
         std::vector<Word> words;
-    
+
     public:
         enum Mood {
             Positive,

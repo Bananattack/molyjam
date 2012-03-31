@@ -1,6 +1,8 @@
 #ifndef RENDERABLE_H_INCLUDED
 #define RENDERABLE_H_INCLUDED
 
+#include "Common.h"
+
 class Renderable {
     public:
         virtual ~Renderable() { }
