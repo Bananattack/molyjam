@@ -13,25 +13,9 @@ int main(int argc, char * argv [] ) {
     World world(window);
     srand(time(0));
 
-    std::vector<std::string> words;
-
-    std::ifstream f("res/words");
-    while(!f.eof()) {
-        std::string line;
-        std::getline(f, line);
-        words.push_back(line);
-    }
-    //const char* const dictionary[] = {"hello", "world", "foo", "bar", "magic", "molyjam!", "stuff"};
-    sf::Font font;
-    font.loadFromFile("res/font.ttf");
-
-    for(size_t i = 0; i != 32; ++i) {
-        float r = randf() * 2 * M_PI;
-        float mag = 2.0f + randf() * 4.0f;
+    for(size_t i = 0; i != 64; ++i) {
         sf::Vector2f pos(sf::Vector2f(window.getSize()) / 2.0f);
-        sf::Vector2f vel(mag * sin(r), mag * -cos(r));
-
-        world.addWord(EntityPtr(new Word(pos, vel, dictionary[i % 7], font)));
+        world.addWord(EntityPtr(new Word(pos)));
     }
 
     world.addCitizen(EntityPtr(new Citizen(sf:: Vector2f(432, 348))));

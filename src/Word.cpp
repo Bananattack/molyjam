@@ -1,9 +1,42 @@
 #include "Word.h"
 #include "World.h"
+#include <fstream>
 
-Word::Word(const sf::Vector2f& position, const sf::Vector2f& velocity, const std::string& message, const sf::Font& font) :
-    text(message, font, 60),
-    velocity(velocity) {
+namespace {
+    std::vector<std::string> getWords() {
+        std::vector<std::string> words;
+        std::ifstream f("res/words");
+        while(!f.eof()) {
+            std::string line;
+            std::getline(f, line);
+            words.push_back(line);
+        }
+        return words;
+    }
+
+    sf::Font getFont() {
+        sf::Font font;
+        font.loadFromFile("res/font.ttf");
+        return font;
+    }
+
+    static sf::Font font = getFont();
+
+    std::string getWord() {
+        static std::vector<std::string> words = getWords();
+        return words[ rand() % words.size() ];
+    }
+
+    sf::Vector2f randomizeVelocity() {
+        float r = randf() * 2 * M_PI;
+        float mag = 2.0f + randf() * 4.0f;
+        return sf::Vector2f(mag * sin(r), mag * -cos(r));
+    }
+}
+
+Word::Word(const sf::Vector2f& position) :
+    text(getWord(), font, 60),
+    velocity(randomizeVelocity()) {
 
     text.setPosition(position);
 }
@@ -18,9 +51,8 @@ void Word::render(sf::RenderWindow& window) {
 void Word::step(World& world) {
     text.move(velocity);
     if(!world.getScreen().intersects(text.getGlobalBounds())) {
+        text.setString( getWord() );
         text.setPosition(sf::Vector2f(world.getResolution()) / 2.0f );
-        float r = randf() * 2 * M_PI;
-        float mag = 2.0f + randf() * 4.0f;
-        velocity = sf::Vector2f(mag * sin(r), mag * -cos(r));
+        velocity = randomizeVelocity();
     }
 }

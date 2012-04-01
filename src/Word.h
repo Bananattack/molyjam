@@ -9,7 +9,7 @@ class Word : public Entity {
         sf::Vector2f velocity;
 
     public:
-        Word(const sf::Vector2f& position, const sf::Vector2f& velocity, const std::string& message, const sf::Font& font);
+        Word(const sf::Vector2f& position);
         ~Word();
 
         void render(sf::RenderWindow& window);
