@@ -10,6 +10,8 @@ include_directories(${SFML_INCLUDE_DIR})
 
 list(APPEND CMAKE_CXX_FLAGS "--std=c++0x")
 
+file(COPY ${CMAKE_SOURCE_DIR}/res DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 add_executable(Game
     src/Game.cpp
     src/Common.h

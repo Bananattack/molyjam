@@ -44,7 +44,6 @@ void World::loop() {
         update();
     }
 }
-
 void World::render() {
     window.clear();
     for(auto it = entities.begin(), end = entities.end(); it != end; ++it) {
@@ -54,15 +53,13 @@ void World::render() {
 }
 
 void World::update() {
-    int time = clock.getElapsedTime().asMilliseconds() / 10;
+    int time = clock.getElapsedTime().asMilliseconds() / 16.6666667f ;
     int frames = std::min(time - lastUpdateTime, MAX_FRAME_GAP);
     if(frames > 0) {
         for(int i = 0; i < frames; ++i) {
             step();
         }
         lastUpdateTime = time;
-    } else {
-        sf::sleep(sf::milliseconds(5));
     }
 }
 
@@ -72,7 +69,12 @@ void World::step() {
         if(event.type == sf::Event::Closed) {
             window.close();
         }
+
+        if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            window.close();
+        }
     }
+
     for(auto it = entities.begin(), end = entities.end(); it != end; ++it) {
         (*it)->step(*this);
     }
