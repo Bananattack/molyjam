@@ -49,8 +49,20 @@ void Word::render(sf::RenderWindow& window) {
 }
 
 void Word::step(World& world) {
+    bool reset = false;
+
+    if( sf::Mouse::isButtonPressed(sf::Mouse::Left) ) {
+        sf::Vector2f mouse( sf::Mouse::getPosition( world.getWindow() ) );
+        if( text.getGlobalBounds().contains(mouse) ) {
+            reset = true;
+        }
+    }
+
     text.move(velocity);
     if(!world.getScreen().intersects(text.getGlobalBounds())) {
+        reset = true;
+    }
+    if( reset ) {
         text.setString( getWord() );
         text.setPosition(sf::Vector2f(world.getResolution()) / 2.0f );
         velocity = randomizeVelocity();

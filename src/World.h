@@ -24,6 +24,7 @@ class World {
         World(sf::RenderWindow& window);
         ~World();
 
+        sf::RenderWindow& getWindow() const { return window; }
         int getLastUpdateTime() const;
         const sf::Vector2f& getResolution() const;
         const sf::FloatRect& getScreen() const;
