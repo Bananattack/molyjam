@@ -24,10 +24,11 @@ int main(int argc, char * argv [] ) {
         sf::Vector2f pos(sf::Vector2f(window.getSize()) / 2.0f);
         sf::Vector2f vel(mag * sin(r), mag * -cos(r));
 
-        world.addEntity(EntityPtr(new Word(pos, vel, dictionary[i % 7], font)));
+        world.addWord(EntityPtr(new Word(pos, vel, dictionary[i % 7], font)));
     }
-    world.addEntity(EntityPtr(new Citizen(sf::Vector2f(432, 348))));
-    world.addEntity(EntityPtr(new Dude()));
+
+    world.addCitizen(EntityPtr(new Citizen(sf:: Vector2f(432, 348))));
+    world.setPlayer(EntityPtr(new Dude()));
     world.loop();
     return 0;
 }

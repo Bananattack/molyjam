@@ -10,6 +10,7 @@ World::World( sf::RenderWindow& window ) :
     window(window),
     resolution(window.getSize()),
     screen(sf::Vector2f(0, 0), resolution),
+    view(screen),
     background(new Background()) {
 }
 
@@ -28,20 +29,20 @@ const sf::FloatRect& World::getScreen() const {
     return screen;
 }
 
-void World::addEntity(const EntityPtr& entity) {
-    entities.push_back(entity);
+void World::setPlayer(const EntityPtr& entity) {
+    player = entity;
 }
 
-const EntityPtr& World::entityAt(size_t index) const {
-    return entities[index];
+void World::addWall(const EntityPtr& entity) {
+    walls.push_back(entity);
 }
 
-EntityPtr& World::entityAt(size_t index) {
-    return entities[index];
+void World::addWord(const EntityPtr& entity) {
+    words.push_back(entity);
 }
 
-size_t World::getEntityCount() const {
-    return entities.size();
+void World::addCitizen(const EntityPtr& entity) {
+    citizens.push_back(entity);
 }
 
 void World::loop() {
@@ -55,10 +56,19 @@ void World::render() {
     if(background) {
         background->render(window);
     }
+    renderList(citizens);
+    if(player) {
+        player->render(window);
+    }
+    renderList(words);
+    renderList(walls);
+    window.display();
+}
+
+void World::renderList(const std::vector<EntityPtr>& entities) {
     for(auto it = entities.begin(), end = entities.end(); it != end; ++it) {
         (*it)->render(window);
     }
-    window.display();
 }
 
 void World::update() {
@@ -83,7 +93,14 @@ void World::step() {
             window.close();
         }
     }
+    stepList(words);
+    if(player) {
+        player->step(*this);
+    }
+    stepList(citizens);
+}
 
+void World::stepList(const std::vector<EntityPtr>& entities) {
     for(auto it = entities.begin(), end = entities.end(); it != end; ++it) {
         (*it)->step(*this);
     }
