@@ -15,6 +15,7 @@
     <ClCompile Include="..\..\..\src\Citizen.cpp" />
     <ClCompile Include="..\..\..\src\Dude.cpp" />
     <ClCompile Include="..\..\..\src\Game.cpp" />
+    <ClCompile Include="..\..\..\src\Wall.cpp" />
     <ClCompile Include="..\..\..\src\Word.cpp" />
     <ClCompile Include="..\..\..\src\World.cpp" />
   </ItemGroup>
@@ -27,6 +28,7 @@
     <ClInclude Include="..\..\..\src\Everything.h" />
     <ClInclude Include="..\..\..\src\Renderable.h" />
     <ClInclude Include="..\..\..\src\Thought.h" />
+    <ClInclude Include="..\..\..\src\Wall.h" />
     <ClInclude Include="..\..\..\src\Word.h" />
     <ClInclude Include="..\..\..\src\World.h" />
   </ItemGroup>

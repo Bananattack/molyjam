@@ -1,8 +1,10 @@
+#include "World.h"
 #include "Dude.h"
 
 Dude::Dude() :
     is_jumping(false),
-    can_jump(false) {
+    can_jump(false),
+    release_jump_button(false) {
 
     if(!spritesheet.loadFromFile("res/sprites.png")) {
         die_horribly();
@@ -24,6 +26,9 @@ enum Direction {
 };
 
 void Dude::step( World& world ) {
+    if(world.getPlayer().get() == this) {
+        world.getView().setCenter(sprite.getPosition());
+    }
     //get keystate
     bool jump = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
     bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
@@ -60,29 +65,34 @@ void Dude::step( World& world ) {
     } else if( velocity.x < -6.5f ) {
         dir = LEFT;
     }
-    if( jump ) {
-        if( can_jump ) {
-            can_jump = false;
-//            is_jumping = true;
-            velocity.y = -JUMP_ACCEL;
+
+    if(!move(world, sf::Vector2f(velocity.x, 0))) {
+        velocity.x = 0;
+    }
+
+    if(jump) {
+        if(can_jump) {
+            if(!release_jump_button) {
+                can_jump = false;
+                release_jump_button = true;
+//              is_jumping = true;
+                velocity.y = -JUMP_ACCEL;
+            }
         } else {
             velocity.y += GRAVITY * 0.3f;
         }
     } else {
+        if(release_jump_button) {
+            release_jump_button = false;
+        }
         velocity.y += GRAVITY;
     }
 
-    velocity.y = std::min( velocity.y, MAX_FALL );
-    pos += velocity;
-    // bounding!
-    sprite.setPosition( pos );
-    sf::FloatRect bounds = sprite.getGlobalBounds();
-    if( bounds.top + bounds.height  > 600 ) {
-        pos.y = 600 - bounds.height;
+    velocity.y = std::min(velocity.y, MAX_FALL);
+    if(!move(world, sf::Vector2f(0, velocity.y))) {
         can_jump = true;
     }
 
-    sprite.setPosition( pos );
     switch(dir) {
         default:
         case NONE:
@@ -99,4 +109,39 @@ void Dude::step( World& world ) {
 
 void Dude::render( sf::RenderWindow& window ) {
     window.draw(sprite);
+}
+
+bool Dude::acquireBounds(sf::FloatRect& bounds) {
+    bounds = sprite.getGlobalBounds();
+    return true;
+}
+
+bool Dude::move(World& world, sf::Vector2f offset) {
+    bool collided = false;
+    sprite.move(offset);
+
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+
+    world.checkWallCollision(shared_from_this(), [&](EntityPtr self, EntityPtr target) -> bool { 
+        sf::FloatRect wall;
+        target->acquireBounds(wall);
+        if(offset.x != 0) {
+            if(offset.x < 0) {
+                sprite.move(wall.width, 0);
+            } else {
+                sprite.move(-bounds.width, 0);
+            } 
+        }
+        if(offset.y != 0) {
+            if(offset.y < 0) {
+                sprite.move(0, wall.height);
+            } else {
+                sprite.move(0, -bounds.height);
+            }
+        }
+        collided = true;
+        return false;
+    });
+
+    return collided;
 }

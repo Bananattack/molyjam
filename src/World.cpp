@@ -9,9 +9,11 @@ World::World( sf::RenderWindow& window ) :
     lastUpdateTime(0),
     window(window),
     resolution(window.getSize()),
-    screen(sf::Vector2f(0, 0), resolution),
-    view(screen),
-    background(new Background()) {
+    view(sf::Vector2f(0, 0), resolution),
+    background(new Background())
+{
+    view.setCenter(resolution * 0.5f);
+    window.setView(view);
 }
 
 World::~World() {
@@ -25,8 +27,19 @@ const sf::Vector2f& World::getResolution() const {
     return resolution;
 }
 
-const sf::FloatRect& World::getScreen() const {
-    return screen;
+sf::View& World::getView() {
+    return view;
+}
+
+sf::FloatRect World::calculateCameraBounds() const {
+    float fudgeFactor = resolution.y * 1.5;
+    sf::Vector2f fudgeVector(fudgeFactor, fudgeFactor);
+    sf::Vector2f position = view.getCenter() - (view.getSize() / 2.0f) - fudgeVector;
+    return sf::FloatRect(position, view.getSize() + fudgeVector * 2.0f);
+}
+
+const EntityPtr& World::getPlayer() const {
+    return player;
 }
 
 void World::setPlayer(const EntityPtr& entity) {
@@ -45,13 +58,37 @@ void World::addCitizen(const EntityPtr& entity) {
     citizens.push_back(entity);
 }
 
+void World::checkWallCollision(const EntityPtr& entity, std::function<bool(EntityPtr, EntityPtr)> onCollide) {
+    return checkCollisionList(entity, walls, onCollide);
+}
+
+void World::checkWordCollision(const EntityPtr& entity, std::function<bool(EntityPtr, EntityPtr)> onCollide) {
+    return checkCollisionList(entity, words, onCollide);
+}
+
+void World::checkCollisionList(const EntityPtr& entity, const std::vector<EntityPtr>& entities, std::function<bool(EntityPtr, EntityPtr)> onCollide) {
+    sf::FloatRect self;
+    if(entity && entity->acquireBounds(self)) {
+        for(auto it = entities.begin(), end = entities.end(); it != end; ++it) {
+            sf::FloatRect target;
+            if((*it)->acquireBounds(target) && self.intersects(target)) {
+                if(!onCollide(entity, *it)) {
+                    break;
+                }
+            }
+        }
+    }
+}
+
 void World::loop() {
     while(window.isOpen()) {
         render();
         update();
     }
 }
+
 void World::render() {
+    window.setView(view);
     window.clear();
     if(background) {
         background->render(window);

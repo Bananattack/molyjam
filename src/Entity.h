@@ -3,12 +3,14 @@
 
 #include <memory>
 #include "Renderable.h"
+#include "Renderable.h"
 
 class World;
 class Entity : public Renderable {
     public:
         virtual ~Entity() {}
         virtual void step(World& world) = 0;
+        virtual bool acquireBounds(sf::FloatRect& bounds) { return false; }
 };
 
 typedef std::shared_ptr<Entity> EntityPtr;
