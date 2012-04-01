@@ -5,6 +5,7 @@
 #include "World.h"
 #include "Entity.h"
 #include "Word.h"
+#include "Wall.h"
 #include "Dude.h"
 #include "Citizen.h"
 
@@ -17,6 +18,8 @@ int main(int argc, char * argv [] ) {
         sf::Vector2f pos(sf::Vector2f(window.getSize()) / 2.0f);
         world.addWord(EntityPtr(new Word(pos)));
     }
+
+    world.addWall(EntityPtr(new Wall(sf::FloatRect(0, 500, 800, 50))));
 
     world.addCitizen(EntityPtr(new Citizen(sf:: Vector2f(432, 348))));
     world.setPlayer(EntityPtr(new Dude()));

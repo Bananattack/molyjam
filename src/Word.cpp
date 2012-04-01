@@ -59,7 +59,7 @@ void Word::step(World& world) {
     }
 
     text.move(velocity);
-    if(!world.getScreen().intersects(text.getGlobalBounds())) {
+    if(!world.calculateCameraBounds().intersects(text.getGlobalBounds())) {
         reset = true;
     }
 

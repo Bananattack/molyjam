@@ -28,6 +28,8 @@ add_executable(Game
     src/Background.cpp
     src/Citizen.h
     src/Citizen.cpp
+    src/Wall.h
+    src/Wall.cpp
 )
 
 target_link_libraries(Game ${SFML_LIBRARIES})
