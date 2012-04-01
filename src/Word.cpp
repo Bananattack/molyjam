@@ -2,7 +2,7 @@
 #include "World.h"
 
 Word::Word(const sf::Vector2f& position, const sf::Vector2f& velocity, const std::string& message, const sf::Font& font) :
-    text(message, font),
+    text(message, font, 60),
     velocity(velocity) {
 
     text.setPosition(position);

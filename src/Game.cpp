@@ -13,10 +13,17 @@ int main(int argc, char * argv [] ) {
     World world(window);
     srand(time(0));
 
-    const char* const dictionary[] = {"hello", "world", "foo", "bar", "magic", "molyjam!", "stuff"};
-    //sf::Font font(sf::Font::getDefaultFont());
+    std::vector<std::string> words;
+
+    std::ifstream f("res/words");
+    while(!f.eof()) {
+        std::string line;
+        std::getline(f, line);
+        words.push_back(line);
+    }
+    //const char* const dictionary[] = {"hello", "world", "foo", "bar", "magic", "molyjam!", "stuff"};
     sf::Font font;
-    font.loadFromFile("res/molyjam.ttf");
+    font.loadFromFile("res/font.ttf");
 
     for(size_t i = 0; i != 32; ++i) {
         float r = randf() * 2 * M_PI;
