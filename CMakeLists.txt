@@ -16,6 +16,8 @@ add_executable(Game
     src/Game.cpp
     src/Common.h
     src/Renderable.h
+    src/Dude.h
+    src/Dude.cpp
     src/Entity.h
     src/World.h
     src/World.cpp
