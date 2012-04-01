@@ -1,3 +1,4 @@
+#include "Background.h"
 #include "World.h"
 
 namespace {
@@ -8,10 +9,15 @@ World::World( sf::RenderWindow& window ) :
     lastUpdateTime(0),
     window(window),
     resolution(window.getSize()),
-    screen(sf::Vector2f(0, 0), resolution) {
+    screen(sf::Vector2f(0, 0), resolution),
+    background(new Background()) {
 }
 
 World::~World() {
+}
+
+int World::getLastUpdateTime() const {
+    return lastUpdateTime;
 }
 
 const sf::Vector2f& World::getResolution() const {
@@ -22,15 +28,15 @@ const sf::FloatRect& World::getScreen() const {
     return screen;
 }
 
-void World::addEntity(const std::shared_ptr<Entity>& entity) {
+void World::addEntity(const EntityPtr& entity) {
     entities.push_back(entity);
 }
 
-const std::shared_ptr<Entity>& World::entityAt(size_t index) const {
+const EntityPtr& World::entityAt(size_t index) const {
     return entities[index];
 }
 
-std::shared_ptr<Entity>& World::entityAt(size_t index) {
+EntityPtr& World::entityAt(size_t index) {
     return entities[index];
 }
 
@@ -46,6 +52,9 @@ void World::loop() {
 }
 void World::render() {
     window.clear();
+    if(background) {
+        background->render(window);
+    }
     for(auto it = entities.begin(), end = entities.end(); it != end; ++it) {
         (*it)->render(window);
     }

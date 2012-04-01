@@ -11,15 +11,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\Background.cpp" />
+    <ClCompile Include="..\..\..\src\Citizen.cpp" />
+    <ClCompile Include="..\..\..\src\Dude.cpp" />
     <ClCompile Include="..\..\..\src\Game.cpp" />
+    <ClCompile Include="..\..\..\src\Word.cpp" />
+    <ClCompile Include="..\..\..\src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\Background.h" />
+    <ClInclude Include="..\..\..\src\Citizen.h" />
+    <ClInclude Include="..\..\..\src\Common.h" />
+    <ClInclude Include="..\..\..\src\Dude.h" />
     <ClInclude Include="..\..\..\src\Entity.h" />
     <ClInclude Include="..\..\..\src\Everything.h" />
     <ClInclude Include="..\..\..\src\Renderable.h" />
     <ClInclude Include="..\..\..\src\Thought.h" />
     <ClInclude Include="..\..\..\src\Word.h" />
-    <ClInclude Include="World.h" />
+    <ClInclude Include="..\..\..\src\World.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DFB06046-2C4C-4B49-A13D-7546305D8255}</ProjectGuid>
@@ -51,10 +60,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Interests\Development\C++\molyjam\vs2010\sfml\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)\..\..\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Interests\Development\C++\molyjam\vs2010\sfml\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)\..\..\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

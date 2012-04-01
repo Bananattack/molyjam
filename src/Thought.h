@@ -1,6 +1,9 @@
 #ifndef THOUGHT_H_INCLUDED
 #define THOUGHT_H_INCLUDED
 
+#include "Word.h"
+#include <fstream>
+
 class Thought {
     private:
         std::vector<Word> words;
@@ -11,8 +14,7 @@ class Thought {
             Negative
         };
 
-        Thought(const std::vector<Word>& words)
-            : words(words) {}
+        Thought() {}
 };
 
 class ThoughtEmitter {
@@ -29,8 +31,7 @@ class ThoughtEmitter {
             }
         }
 
-        ThoughtEmitter(const std::vector<Thought>& thoughts)
-            : thoughts(thoughts) {}
+        ThoughtEmitter() {}
 };
 
 #endif

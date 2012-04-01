@@ -24,6 +24,10 @@ add_executable(Game
     src/Word.h
     src/Word.cpp
     src/Thought.h
+    src/Background.h
+    src/Background.cpp
+    src/Citizen.h
+    src/Citizen.cpp
 )
 
 target_link_libraries(Game ${SFML_LIBRARIES})

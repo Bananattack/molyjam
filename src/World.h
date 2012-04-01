@@ -13,17 +13,19 @@ class World {
         sf::RenderWindow& window;
         sf::Vector2f resolution;
         sf::FloatRect screen;
-        std::vector<std::shared_ptr<Entity>> entities;
+        std::vector<EntityPtr> entities;
+        RenderablePtr background;
 
     public:
         World(sf::RenderWindow& window);
         ~World();
 
+        int getLastUpdateTime() const;
         const sf::Vector2f& getResolution() const;
         const sf::FloatRect& getScreen() const;
-        void addEntity(const std::shared_ptr<Entity>& entity);
-        const std::shared_ptr<Entity>& entityAt(size_t index) const;
-        std::shared_ptr<Entity>& entityAt(size_t index);
+        void addEntity(const EntityPtr& entity);
+        const EntityPtr& entityAt(size_t index) const;
+        EntityPtr& entityAt(size_t index);
         size_t getEntityCount() const;
         void loop();
 
