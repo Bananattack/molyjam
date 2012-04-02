@@ -1,5 +1,6 @@
 #include "World.h"
 #include "Dude.h"
+#include "Word.h"
 
 Dude::Dude() :
     is_jumping(false),
@@ -36,7 +37,7 @@ void Dude::step( World& world ) {
         sf::Keyboard::isKeyPressed(sf::Keyboard::A);
     bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::D);
-    bool hold = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift);
+    bool hold = sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W);
 
     sf::Vector2f pos = sprite.getPosition();
 
@@ -49,49 +50,75 @@ void Dude::step( World& world ) {
     static const float GRAVITY = 2.0f;
     static const float MAX_FALL = 16.0f;
 
-    if( left && !right ) {
-        velocity.x -= MOVE_ACCEL;
-        dir = LEFT;
-    } else if( right && !left ) {
-        velocity.x += MOVE_ACCEL;
-        dir = RIGHT;
-    } else {
-        velocity.x *= MOVE_FRICTION;
-        dir = NONE;
-    }
-
-    velocity.x = std::min( std::max( velocity.x, -MAX_MOVE_SPEED ), MAX_MOVE_SPEED );
-    if( velocity.x > 6.5f ) {
-        dir = RIGHT;
-    } else if( velocity.x < -6.5f ) {
-        dir = LEFT;
-    }
-
-    if(!move(world, sf::Vector2f(velocity.x, 0))) {
-        velocity.x = 0;
-    }
-
-    if(jump) {
-        if(can_jump) {
-//            if(!release_jump_button) {
-                can_jump = false;
-                release_jump_button = true;
-//              is_jumping = true;
-                velocity.y = -JUMP_ACCEL;
-//            }
+    if(!grapplingWord) {
+        if( left && !right ) {
+            velocity.x -= MOVE_ACCEL;
+            dir = LEFT;
+        } else if( right && !left ) {
+            velocity.x += MOVE_ACCEL;
+            dir = RIGHT;
         } else {
-            velocity.y += GRAVITY * 0.3f;
+            velocity.x *= MOVE_FRICTION;
+            dir = NONE;
+        }
+
+        velocity.x = std::min( std::max( velocity.x, -MAX_MOVE_SPEED ), MAX_MOVE_SPEED );
+        if( velocity.x > 6.5f ) {
+            dir = RIGHT;
+        } else if( velocity.x < -6.5f ) {
+            dir = LEFT;
+        }
+
+        if(!move(world, sf::Vector2f(velocity.x, 0))) {
+            velocity.x = 0;
+        }
+
+        if(jump) {
+            if(can_jump) {
+                if(!release_jump_button) {
+                    can_jump = false;
+                    release_jump_button = true;
+                    is_jumping = true;
+                    velocity.y = -JUMP_ACCEL;
+                }
+            } else {
+                velocity.y += GRAVITY * 0.3f;
+            }
+        } else {
+            if(release_jump_button) {
+                release_jump_button = false;
+            }
+            velocity.y += GRAVITY;
+        }
+
+        velocity.y = std::min(velocity.y, MAX_FALL);
+        if(!move(world, sf::Vector2f(0, velocity.y))) {
+            can_jump = true;
+        }
+
+        if(hold) {
+            for(auto it = world.words.begin(), end = world.words.end(); it != end; ++it) {
+                sf::FloatRect box;
+                if((*it)->acquireBounds(box) && sprite.getGlobalBounds().intersects(box)) {
+                    velocity = sf::Vector2f(0, 0);
+                    can_jump = false;
+                    release_jump_button = true;
+                    grapplingWord = *it;
+                }
+            }
         }
     } else {
-        if(release_jump_button) {
-            release_jump_button = false;
+        sf::FloatRect box;
+        grapplingWord->acquireBounds(box);
+        if(!move(world, sf::Vector2f(box.left - sprite.getPosition().x, 0))) {
+            grapplingWord = 0;
         }
-        velocity.y += GRAVITY;
-    }
-
-    velocity.y = std::min(velocity.y, MAX_FALL);
-    if(!move(world, sf::Vector2f(0, velocity.y))) {
-        can_jump = true;
+        if(grapplingWord && !move(world, sf::Vector2f(0, box.top - sprite.getPosition().y))) {
+            grapplingWord = 0;
+        }
+        if(grapplingWord && jump) {
+            grapplingWord = 0;
+        }
     }
 }
 

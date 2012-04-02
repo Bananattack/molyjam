@@ -16,6 +16,7 @@ class Dude : public Entity, public std::enable_shared_from_this<Dude> {
         bool move(World& world, sf::Vector2f offset);
 
     private:
+        EntityPtr grapplingWord;
         sf::Texture spritesheet;
         sf::Sprite sprite;
         sf::Vector2f velocity;
