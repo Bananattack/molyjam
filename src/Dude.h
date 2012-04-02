@@ -16,10 +16,12 @@ class Dude : public Entity, public std::enable_shared_from_this<Dude> {
         bool move(World& world, sf::Vector2f offset);
 
     private:
+        sf::Vector2f grappleOffset;
         EntityPtr grapplingWord;
         sf::Texture spritesheet;
         sf::Sprite sprite;
         sf::Vector2f velocity;
+        
         bool is_jumping, can_jump, release_jump_button;
 };
 
