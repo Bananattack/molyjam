@@ -19,14 +19,14 @@ int main(int argc, char * argv [] ) {
     bgmusic.play();
 
     for(size_t i = 0; i != 64; ++i) {
-        sf::Vector2f pos(sf::Vector2f(window.getSize()) / 2.0f);
+    sf::Vector2f pos(sf::Vector2f(432, 430));
         world.addWord(EntityPtr(new Word(pos)));
     }
 
     world.addWall(EntityPtr(new Wall(sf::FloatRect(0, 0, 50, 800))));
     world.addWall(EntityPtr(new Wall(sf::FloatRect(0, 500, 800, 50))));
 
-    world.addCitizen(EntityPtr(new Citizen(sf:: Vector2f(432, 348))));
+    world.addCitizen(EntityPtr(new Citizen(sf:: Vector2f(432, 430))));
     world.setPlayer(EntityPtr(new Dude()));
     world.loop();
     return 0;

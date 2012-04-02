@@ -12,6 +12,7 @@ Dude::Dude() :
     sprite.setTexture(spritesheet);
     sprite.setPosition(400,300);
     sprite.setScale(2.0f, 2.0f);
+    sprite.setTextureRect(sf::IntRect(0,0,32,32));
 }
 
 Dude::~Dude() {
@@ -72,12 +73,12 @@ void Dude::step( World& world ) {
 
     if(jump) {
         if(can_jump) {
-            if(!release_jump_button) {
+//            if(!release_jump_button) {
                 can_jump = false;
                 release_jump_button = true;
 //              is_jumping = true;
                 velocity.y = -JUMP_ACCEL;
-            }
+//            }
         } else {
             velocity.y += GRAVITY * 0.3f;
         }
@@ -91,19 +92,6 @@ void Dude::step( World& world ) {
     velocity.y = std::min(velocity.y, MAX_FALL);
     if(!move(world, sf::Vector2f(0, velocity.y))) {
         can_jump = true;
-    }
-
-    switch(dir) {
-        default:
-        case NONE:
-            sprite.setTextureRect(sf::IntRect(0,0,48,32));
-            break;
-        case LEFT:
-            sprite.setTextureRect(sf::IntRect(0,32,48,32));
-            break;
-        case RIGHT:
-            sprite.setTextureRect(sf::IntRect(0,64,48,32));
-            break;
     }
 }
 
