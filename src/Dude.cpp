@@ -117,29 +117,28 @@ bool Dude::acquireBounds(sf::FloatRect& bounds) {
 }
 
 bool Dude::move(World& world, sf::Vector2f offset) {
-    bool collided = false;
+    bool passable = true;
     sprite.move(offset);
 
     sf::FloatRect bounds = sprite.getGlobalBounds();
     for(auto it = world.walls.begin(), end = world.walls.end(); it != end; ++it) {
         sf::FloatRect wall;
         if((*it)->acquireBounds(wall) && bounds.intersects(wall)) {
-            if(offset.x != 0) {
-                if(offset.x < 0) {
-                    sprite.move(wall.width, 0);
-                } else {
-                    sprite.move(-bounds.width, 0);
-                } 
+            if(offset.x < 0) {
+                sprite.setPosition(wall.left + wall.width, 0);
+            } else if(offset.x > 0 ) {
+                sprite.setPosition(wall.left - bounds.width, 0);
+            } 
+
+            if(offset.y < 0) {
+                sprite.setPosition(0, wall.top + wall.height);
+            } else if(offset.y > 0 ) {
+                sprite.setPosition(0, wall.top - bounds.height);
             }
-            if(offset.y != 0) {
-                if(offset.y < 0) {
-                    sprite.move(0, wall.height);
-                } else {
-                    sprite.move(0, -bounds.height);
-                }
-            }
-            collided = true;
+
+            passable = false;
+            break;
         }
     }
-    return collided;
+    return passable;
 }

@@ -14,6 +14,10 @@ int main(int argc, char * argv [] ) {
     World world(window);
     srand(time(0));
 
+    sf::Music bgmusic;
+    bgmusic.openFromFile("res/music.ogg");
+    bgmusic.play();
+
     for(size_t i = 0; i != 64; ++i) {
         sf::Vector2f pos(sf::Vector2f(window.getSize()) / 2.0f);
         world.addWord(EntityPtr(new Word(pos)));

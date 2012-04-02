@@ -15,6 +15,7 @@
 #endif
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #define die_horribly() assert(0)
 
