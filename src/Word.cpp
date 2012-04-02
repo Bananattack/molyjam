@@ -35,6 +35,7 @@ namespace {
 }
 
 Word::Word(const sf::Vector2f& position) :
+    reset(false),
     text(getWord(), font, 60),
     velocity(randomizeVelocity()) {
     origin = position;
@@ -49,8 +50,6 @@ void Word::render(sf::RenderWindow& window) {
 }
 
 void Word::step(World& world) {
-    bool reset = false;
-
     if( sf::Mouse::isButtonPressed(sf::Mouse::Left) ) {
         sf::Vector2f mouse( sf::Mouse::getPosition( world.getWindow() ) );
         if( text.getGlobalBounds().contains(mouse) ) {
@@ -67,5 +66,6 @@ void Word::step(World& world) {
         text.setString( getWord() );
         text.setPosition(origin);
         velocity = randomizeVelocity();
+        reset = false;
     }
 }

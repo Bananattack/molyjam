@@ -40,6 +40,9 @@ class World {
         sf::View& getView();
         sf::FloatRect calculateCameraBounds() const;
 
+        char getGoal() const { return goal; }
+        void nextLetter(int bonus);
+
         const EntityPtr& getPlayer() const;
         void setPlayer(const EntityPtr& entity);
         void addWord(const EntityPtr& entity);
