@@ -113,13 +113,13 @@ void Dude::step( World& world ) {
         sf::FloatRect box;
         grapplingWord->acquireBounds(box);
         if(!move(world, sf::Vector2f(box.left - grappleOffset.x - sprite.getPosition().x, 0))) {
-            grapplingWord = 0;
+            grapplingWord = EntityPtr(static_cast<Entity*>(NULL));
         }
         if(grapplingWord && !move(world, sf::Vector2f(0, box.top - grappleOffset.y - sprite.getPosition().y))) {
-            grapplingWord = 0;
+            grapplingWord = EntityPtr(static_cast<Entity*>(NULL));
         }
         if(grapplingWord && jump) {
-            grapplingWord = 0;
+            grapplingWord = EntityPtr(static_cast<Entity*>(NULL));
             can_jump = false;
             release_jump_button = true;
             is_jumping = true;
