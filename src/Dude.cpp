@@ -129,14 +129,35 @@ void Dude::step( World& world ) {
         if(grapplingWord && !move(world, sf::Vector2f(0, box.top - grappleOffset.y - sprite.getPosition().y))) {
             grapplingWord = EntityPtr(static_cast<Entity*>(0));
         }
-        if(grapplingWord && jump) {
-            grapplingWord = EntityPtr(static_cast<Entity*>(0));
+
+        if(!jump) {
+            release_jump_button = false;
+        }
+
+        if(grapplingWord && jump && !release_jump_button) {
+
+            Word* grrrr = ((Word*) grapplingWord.get());
+            grrrr->setReset(true);
+
             can_jump = false;
             release_jump_button = true;
             is_jumping = true;
             jump_sound.play();
             velocity.y = -JUMP_ACCEL;
             sprite.setRotation(0);
+
+            std::string text = grrrr->getText();
+            int matches = 0;
+            for(size_t i = 0; i < text.size(); ++i) {
+                if(text[i] == world.getGoal()) {
+                    matches++;
+                }
+            }
+            if(matches) {
+                world.nextLetter(matches);
+            }
+
+            grapplingWord = EntityPtr(static_cast<Entity*>(0));
         }
     }
 }

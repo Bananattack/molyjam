@@ -5,6 +5,7 @@
 
 class Word : public Entity {
     private:
+        bool reset;
         sf::Text text;
         sf::Vector2f velocity;
         sf::Vector2f origin;
@@ -23,6 +24,12 @@ class Word : public Entity {
         sf::Vector2f getVelocity() {
             return velocity;
         }
+
+        std::string getText() {
+            return text.getString();
+        }
+
+        void setReset(bool r) { reset = r; }
 };
 
 #endif/*WORD_H_INCLUDED*/

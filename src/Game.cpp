@@ -10,9 +10,10 @@
 #include "Citizen.h"
 
 int main(int argc, char * argv [] ) {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Molyjam!", sf::Style::Titlebar | sf::Style::Close | sf::Style::Fullscreen);
-    World world(window);
     srand(time(0));
+
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Molyjam!", sf::Style::Titlebar | sf::Style::Close);
+    World world(window);
 
     sf::Music bgmusic;
     bgmusic.openFromFile("res/music.ogg");

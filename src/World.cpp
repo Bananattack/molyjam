@@ -1,3 +1,4 @@
+#include <cctype>
 #include <sstream>
 #include "Background.h"
 #include "World.h"
@@ -22,11 +23,11 @@ World::World( sf::RenderWindow& window) :
     resolution(window.getSize()),
     view(sf::Vector2f(0, 0), resolution),
     deadline(0),
-    goal('A'),
+    goal(rand() % 26 + 'a'),
     score(0),
     deadlineText("test", fontx, 200),
-    scoreText("", fontx, 60),
-    goalText("", fontx, 60),
+    scoreText("", fontx, 200),
+    goalText("", fontx, 200),
     background(new Background())
 {
     view.setCenter(resolution * 0.5f);
@@ -88,22 +89,34 @@ void World::render() {
     if(background) {
         background->render(window);
     }
-    renderList(words);
     renderList(citizens);
     if(player) {
         player->render(window);
     }
+    renderList(words);
     renderList(walls);
     //window.display();
 
     window.setView(window.getDefaultView());
-    deadlineText.setPosition(sf::Vector2f(30, 30));
 
-    std::ostringstream os; 
-    os << int(deadline - clock.getElapsedTime().asSeconds());
-    deadlineText.setColor(sf::Color(255, 0, 0));
-    deadlineText.setString(os.str());
-    window.draw(deadlineText);
+
+    {
+        std::ostringstream os;
+        os << int(deadline - clock.getElapsedTime().asSeconds());
+        deadlineText.setPosition(sf::Vector2f(30, 30));
+        deadlineText.setColor(sf::Color(255, 0, 0));
+        deadlineText.setString(os.str());
+        window.draw(deadlineText);
+    }
+    {
+        std::ostringstream os;
+        os << char(toupper(goal));
+        goalText.setPosition(sf::Vector2f(30, -100));
+        goalText.setColor(sf::Color(255, 0, 0));
+        goalText.setString(os.str());
+        window.draw(goalText);
+    }
+    
     window.display();
 }
 
@@ -113,6 +126,12 @@ void World::renderList(const std::vector<EntityPtr>& entities) {
     }
 }
 
+void World::nextLetter(int bonus) {
+    deadline = clock.getElapsedTime().asSeconds() + 10;
+    goal = rand() % 26 + 'a';
+    score += bonus;
+}
+
 void World::update() {
     int time = clock.getElapsedTime().asMilliseconds() / 16.6666667f ;
     int frames = std::min(time - lastUpdateTime, MAX_FRAME_GAP);
@@ -120,7 +139,7 @@ void World::update() {
         for(int i = 0; i < frames; ++i) {
             step();
             if(deadline < clock.getElapsedTime().asSeconds()) {
-                 deadline = clock.getElapsedTime().asSeconds() + 10;
+                 nextLetter(0);
             }
         }
         lastUpdateTime = time;
