@@ -9,9 +9,9 @@ What if you could CLIMB text
 Controls:
 ---------
 
-Space = jump
-Left/Rght = move
-Up = grapple
+* Space = jump
+* Left/Rght = move
+* Up = grapple
 
 Instructions:
 -------------
@@ -23,5 +23,5 @@ Source code
 
 http://github.com/Bananattack/molyjam
 
-Windows (easy) - VS2010, OpenAL 32-bit, libsndfile 32-bit installer (put dlls in system32)
-Other platforms, Windows (hard) - Needs SFML and a bunch of crap and cmake.
+* Windows (easy) - VS2010, OpenAL 32-bit, libsndfile 32-bit installer (put dlls in system32)
+* Other platforms, Windows (hard) - Needs SFML and a bunch of crap and cmake.
