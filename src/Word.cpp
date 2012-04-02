@@ -62,6 +62,7 @@ void Word::step(World& world) {
     if(!world.calculateCameraBounds().intersects(text.getGlobalBounds())) {
         reset = true;
     }
+
     if( reset ) {
         text.setString( getWord() );
         text.setPosition(sf::Vector2f(world.getResolution()) / 2.0f );
