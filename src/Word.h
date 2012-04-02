@@ -14,6 +14,14 @@ class Word : public Entity {
 
         void render(sf::RenderWindow& window);
         void step(World& world);
+        virtual bool acquireBounds(sf::FloatRect& bounds) {
+            bounds = text.getGlobalBounds();
+            return true;
+        }
+
+        sf::Vector2f getVelocity() {
+            return velocity;
+        }
 };
 
 #endif/*WORD_H_INCLUDED*/
