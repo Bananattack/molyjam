@@ -105,21 +105,21 @@ void Dude::step( World& world ) {
                     release_jump_button = true;
                     grapplingWord = *it;
                     grappleOffset = sf::Vector2f(box.left - sprite.getPosition().x, box.top - sprite.getPosition().y);
-                    sprite.setRotation(45);
                 }
             }
         }
     } else {
         sf::FloatRect box;
+
         grapplingWord->acquireBounds(box);
         if(!move(world, sf::Vector2f(box.left - grappleOffset.x - sprite.getPosition().x, 0))) {
-            grapplingWord = EntityPtr(static_cast<Entity*>(NULL));
+            grapplingWord = EntityPtr(static_cast<Entity*>(0));
         }
         if(grapplingWord && !move(world, sf::Vector2f(0, box.top - grappleOffset.y - sprite.getPosition().y))) {
-            grapplingWord = EntityPtr(static_cast<Entity*>(NULL));
+            grapplingWord = EntityPtr(static_cast<Entity*>(0));
         }
         if(grapplingWord && jump) {
-            grapplingWord = EntityPtr(static_cast<Entity*>(NULL));
+            grapplingWord = EntityPtr(static_cast<Entity*>(0));
             can_jump = false;
             release_jump_button = true;
             is_jumping = true;
