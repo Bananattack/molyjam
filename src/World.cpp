@@ -12,6 +12,7 @@ namespace {
     }
 
     static sf::Font fontx = getFont();
+    bool gameover = false;
 }
 namespace {
     static const int MAX_FRAME_GAP = 3;
@@ -25,8 +26,8 @@ World::World( sf::RenderWindow& window) :
     deadline(0),
     goal(rand() % 26 + 'a'),
     score(0),
-    deadlineText("test", fontx, 200),
-    scoreText("", fontx, 200),
+    deadlineText("test", fontx, 160),
+    scoreText("", fontx, 160),
     goalText("", fontx, 160),
     background(new Background())
 {
@@ -84,6 +85,27 @@ void World::loop() {
 }
 
 void World::render() {
+    if( gameover ) {
+        window.clear();
+        static sf::Text losermessage("You were defeated by\n     the letter", fontx, 100);
+        losermessage.setPosition(100,0);
+        window.draw(losermessage);
+
+        static sf::Text losermessage2("", fontx, 300);
+        losermessage2.setPosition(200,200);
+        std::ostringstream os;
+        os << char(toupper(goal));
+        losermessage2.setString(os.str());
+        window.draw(losermessage2);
+
+
+        static sf::Text losermessage3("Press Escape to play again!", fontx, 100);
+        losermessage3.setPosition(0,500);
+        window.draw(losermessage3);
+
+        window.display();
+        return;
+    }
     window.setView(view);
     window.clear();
     if(background) {
@@ -124,7 +146,7 @@ void World::render() {
         goalText.setString(os.str());
         window.draw(goalText);
     }
-    
+
     window.display();
 }
 
@@ -135,6 +157,9 @@ void World::renderList(const std::vector<EntityPtr>& entities) {
 }
 
 void World::nextLetter(int bonus) {
+    if( bonus == 0 && deadline != 0 ) {
+        gameover = true;
+    }
     deadline = clock.getElapsedTime().asSeconds() + 11;
     goal = rand() % 26 + 'a';
     score += bonus;

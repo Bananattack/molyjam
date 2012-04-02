@@ -12,7 +12,7 @@
 int main(int argc, char * argv [] ) {
     srand(time(0));
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Molyjam!", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Molyjam!", sf::Style::Titlebar | sf::Style::Close | sf::Style::Fullscreen);
     World world(window);
 
     sf::Music bgmusic;
