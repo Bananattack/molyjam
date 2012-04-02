@@ -37,7 +37,7 @@ namespace {
 Word::Word(const sf::Vector2f& position) :
     text(getWord(), font, 60),
     velocity(randomizeVelocity()) {
-
+    origin = position;
     text.setPosition(position);
 }
 
@@ -65,7 +65,7 @@ void Word::step(World& world) {
 
     if( reset ) {
         text.setString( getWord() );
-        text.setPosition(sf::Vector2f(world.getResolution()) / 2.0f );
+        text.setPosition(origin);
         velocity = randomizeVelocity();
     }
 }

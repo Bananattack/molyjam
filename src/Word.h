@@ -7,6 +7,7 @@ class Word : public Entity {
     private:
         sf::Text text;
         sf::Vector2f velocity;
+        sf::Vector2f origin;
 
     public:
         Word(const sf::Vector2f& position);

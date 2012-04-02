@@ -32,7 +32,7 @@ sf::View& World::getView() {
 }
 
 sf::FloatRect World::calculateCameraBounds() const {
-    float fudgeFactor = resolution.y * 1.5;
+    float fudgeFactor = resolution.y * 2.5;
     sf::Vector2f fudgeVector(fudgeFactor, fudgeFactor);
     sf::Vector2f position = view.getCenter() - (view.getSize() / 2.0f) - fudgeVector;
     return sf::FloatRect(position, view.getSize() + fudgeVector * 2.0f);
@@ -71,11 +71,11 @@ void World::render() {
     if(background) {
         background->render(window);
     }
+    renderList(words);
     renderList(citizens);
     if(player) {
         player->render(window);
     }
-    renderList(words);
     renderList(walls);
     window.display();
 }
