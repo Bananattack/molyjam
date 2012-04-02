@@ -27,7 +27,7 @@ World::World( sf::RenderWindow& window) :
     score(0),
     deadlineText("test", fontx, 200),
     scoreText("", fontx, 200),
-    goalText("", fontx, 200),
+    goalText("", fontx, 160),
     background(new Background())
 {
     view.setCenter(resolution * 0.5f);
@@ -111,8 +111,16 @@ void World::render() {
     {
         std::ostringstream os;
         os << char(toupper(goal));
-        goalText.setPosition(sf::Vector2f(30, -100));
+        goalText.setPosition(sf::Vector2f(30, -80));
         goalText.setColor(sf::Color(255, 0, 0));
+        goalText.setString(os.str());
+        window.draw(goalText);
+    }
+    {
+        std::ostringstream os;
+        os << score;
+        goalText.setPosition(sf::Vector2f(600, -80));
+        goalText.setColor(sf::Color(255, 255, 255));
         goalText.setString(os.str());
         window.draw(goalText);
     }
@@ -127,7 +135,7 @@ void World::renderList(const std::vector<EntityPtr>& entities) {
 }
 
 void World::nextLetter(int bonus) {
-    deadline = clock.getElapsedTime().asSeconds() + 10;
+    deadline = clock.getElapsedTime().asSeconds() + 11;
     goal = rand() % 26 + 'a';
     score += bonus;
 }
