@@ -23,6 +23,7 @@ int main(int argc, char * argv [] ) {
         world.addWord(EntityPtr(new Word(pos)));
     }
 
+    world.addWall(EntityPtr(new Wall(sf::FloatRect(0, 0, 50, 800))));
     world.addWall(EntityPtr(new Wall(sf::FloatRect(0, 500, 800, 50))));
 
     world.addCitizen(EntityPtr(new Citizen(sf:: Vector2f(432, 348))));

@@ -120,20 +120,24 @@ bool Dude::move(World& world, sf::Vector2f offset) {
     bool passable = true;
     sprite.move(offset);
 
+    sf::Vector2f position = sprite.getPosition();
     sf::FloatRect bounds = sprite.getGlobalBounds();
     for(auto it = world.walls.begin(), end = world.walls.end(); it != end; ++it) {
         sf::FloatRect wall;
         if((*it)->acquireBounds(wall) && bounds.intersects(wall)) {
-            if(offset.x < 0) {
-                sprite.setPosition(wall.left + wall.width, 0);
-            } else if(offset.x > 0 ) {
-                sprite.setPosition(wall.left - bounds.width, 0);
-            } 
-
-            if(offset.y < 0) {
-                sprite.setPosition(0, wall.top + wall.height);
-            } else if(offset.y > 0 ) {
-                sprite.setPosition(0, wall.top - bounds.height);
+            if(offset.x != 0) {
+                if(offset.x < 0) {
+                    sprite.setPosition(wall.left + wall.width, position.y);
+                } else {
+                    sprite.setPosition(wall.left - bounds.width, position.y);
+                }
+            }
+            if(offset.y != 0) {
+                if(offset.y < 0) {
+                    sprite.setPosition(position.x, wall.top + wall.height);
+                } else {
+                    sprite.setPosition(position.x, wall.top - bounds.height);
+                }
             }
 
             passable = false;
