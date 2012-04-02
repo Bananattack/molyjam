@@ -31,7 +31,7 @@ class World {
         std::vector<EntityPtr> words;
         std::vector<EntityPtr> citizens;
 
-        World(sf::RenderWindow& window, sf::Font font);
+        World(sf::RenderWindow& windo);
         ~World();
 
         sf::RenderWindow& getWindow() const { return window; }
