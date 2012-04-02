@@ -14,13 +14,14 @@ class World {
         sf::RenderWindow& window;
         sf::Vector2f resolution;
         sf::View view;
-        std::vector<EntityPtr> walls;
-        std::vector<EntityPtr> words;
-        std::vector<EntityPtr> citizens;
         EntityPtr player;
         RenderablePtr background;
 
     public:
+        std::vector<EntityPtr> walls;
+        std::vector<EntityPtr> words;
+        std::vector<EntityPtr> citizens;
+
         World(sf::RenderWindow& window);
         ~World();
 
@@ -36,9 +37,6 @@ class World {
         void addWall(const EntityPtr& entity);
         void addCitizen(const EntityPtr& entity);
 
-        void checkWallCollision(const EntityPtr& entity, std::function<bool(EntityPtr, EntityPtr)> onCollide);
-        void checkWordCollision(const EntityPtr& entity, std::function<bool(EntityPtr, EntityPtr)> onCollide);
-
         void loop();
 
     private:
@@ -48,7 +46,6 @@ class World {
 
         void renderList(const std::vector<EntityPtr>& entities);
         void stepList(const std::vector<EntityPtr>& entities);
-        void checkCollisionList(const EntityPtr& entity, const std::vector<EntityPtr>& entities, std::function<bool(EntityPtr, EntityPtr)> onCollide);
 };
 
 #endif

@@ -121,27 +121,25 @@ bool Dude::move(World& world, sf::Vector2f offset) {
     sprite.move(offset);
 
     sf::FloatRect bounds = sprite.getGlobalBounds();
-
-    world.checkWallCollision(shared_from_this(), [&](EntityPtr self, EntityPtr target) -> bool { 
+    for(auto it = world.walls.begin(), end = world.walls.end(); it != end; ++it) {
         sf::FloatRect wall;
-        target->acquireBounds(wall);
-        if(offset.x != 0) {
-            if(offset.x < 0) {
-                sprite.move(wall.width, 0);
-            } else {
-                sprite.move(-bounds.width, 0);
-            } 
-        }
-        if(offset.y != 0) {
-            if(offset.y < 0) {
-                sprite.move(0, wall.height);
-            } else {
-                sprite.move(0, -bounds.height);
+        if((*it)->acquireBounds(wall) && bounds.intersects(wall)) {
+            if(offset.x != 0) {
+                if(offset.x < 0) {
+                    sprite.move(wall.width, 0);
+                } else {
+                    sprite.move(-bounds.width, 0);
+                } 
             }
+            if(offset.y != 0) {
+                if(offset.y < 0) {
+                    sprite.move(0, wall.height);
+                } else {
+                    sprite.move(0, -bounds.height);
+                }
+            }
+            collided = true;
         }
-        collided = true;
-        return false;
-    });
-
+    }
     return collided;
 }

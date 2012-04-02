@@ -58,28 +58,6 @@ void World::addCitizen(const EntityPtr& entity) {
     citizens.push_back(entity);
 }
 
-void World::checkWallCollision(const EntityPtr& entity, std::function<bool(EntityPtr, EntityPtr)> onCollide) {
-    return checkCollisionList(entity, walls, onCollide);
-}
-
-void World::checkWordCollision(const EntityPtr& entity, std::function<bool(EntityPtr, EntityPtr)> onCollide) {
-    return checkCollisionList(entity, words, onCollide);
-}
-
-void World::checkCollisionList(const EntityPtr& entity, const std::vector<EntityPtr>& entities, std::function<bool(EntityPtr, EntityPtr)> onCollide) {
-    sf::FloatRect self;
-    if(entity && entity->acquireBounds(self)) {
-        for(auto it = entities.begin(), end = entities.end(); it != end; ++it) {
-            sf::FloatRect target;
-            if((*it)->acquireBounds(target) && self.intersects(target)) {
-                if(!onCollide(entity, *it)) {
-                    break;
-                }
-            }
-        }
-    }
-}
-
 void World::loop() {
     while(window.isOpen()) {
         render();
