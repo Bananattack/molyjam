@@ -1,15 +1,32 @@
+#include <sstream>
 #include "Background.h"
 #include "World.h"
 
+namespace {    
+
+    sf::Font getFont() {
+        sf::Font font;
+        font.loadFromFile("res/font.ttf");
+        return font;
+    }
+
+    static sf::Font fontx = getFont();
+}
 namespace {
     static const int MAX_FRAME_GAP = 3;
 }
 
-World::World( sf::RenderWindow& window ) :
+World::World( sf::RenderWindow& window) :
     lastUpdateTime(0),
     window(window),
     resolution(window.getSize()),
     view(sf::Vector2f(0, 0), resolution),
+    deadline(0),
+    goal('A'),
+    score(0),
+    deadlineText("test", fontx, 200),
+    scoreText("", fontx, 60),
+    goalText("", fontx, 60),
     background(new Background())
 {
     view.setCenter(resolution * 0.5f);
@@ -77,6 +94,16 @@ void World::render() {
         player->render(window);
     }
     renderList(walls);
+    //window.display();
+
+    window.setView(window.getDefaultView());
+    deadlineText.setPosition(sf::Vector2f(30, 30));
+
+    std::ostringstream os; 
+    os << int(deadline - clock.getElapsedTime().asSeconds());
+    deadlineText.setColor(sf::Color(255, 0, 0));
+    deadlineText.setString(os.str());
+    window.draw(deadlineText);
     window.display();
 }
 
@@ -92,6 +119,9 @@ void World::update() {
     if(frames > 0) {
         for(int i = 0; i < frames; ++i) {
             step();
+            if(deadline < clock.getElapsedTime().asSeconds()) {
+                 deadline = clock.getElapsedTime().asSeconds() + 10;
+            }
         }
         lastUpdateTime = time;
     }

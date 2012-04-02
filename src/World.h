@@ -17,12 +17,21 @@ class World {
         EntityPtr player;
         RenderablePtr background;
 
+        sf::Font font;
+        int deadline;
+        char goal;
+        int score;
+
+        sf::Text deadlineText;
+        sf::Text goalText;
+        sf::Text scoreText;
+
     public:
         std::vector<EntityPtr> walls;
         std::vector<EntityPtr> words;
         std::vector<EntityPtr> citizens;
 
-        World(sf::RenderWindow& window);
+        World(sf::RenderWindow& window, sf::Font font);
         ~World();
 
         sf::RenderWindow& getWindow() const { return window; }
