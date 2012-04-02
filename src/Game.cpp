@@ -25,7 +25,7 @@ int main(int argc, char * argv [] ) {
     //left wall
     world.addWall(EntityPtr(new Wall(sf::FloatRect(-1024, 0, 1024, 1024))));
     //right wall
-    world.addWall(EntityPtr(new Wall(sf::FloatRect(6*1024, 0, 1024, 1024))));
+    world.addWall(EntityPtr(new Wall(sf::FloatRect(3*1024, 0, 1024, 1024))));
 
     for(size_t i = 0; i < 10; ++i ) {
         sf::Vector2f origin(128 + 300 * i, 950 );
