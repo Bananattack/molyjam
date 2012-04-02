@@ -10,7 +10,7 @@
 #include "Citizen.h"
 
 int main(int argc, char * argv [] ) {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Molyjam!", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Molyjam!", sf::Style::Titlebar | sf::Style::Close | sf::Style::Fullscreen);
     World world(window);
     srand(time(0));
 
