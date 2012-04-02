@@ -2,6 +2,16 @@
 #include "Dude.h"
 #include "Word.h"
 
+namespace {
+    sf::Music * getJumpSound() {
+        sf::Music * sound = new sf::Music();
+        sound->openFromFile("res/jump.ogg");
+        return sound;
+    }
+}
+
+static sf::Music& jump_sound = *getJumpSound();
+
 Dude::Dude() :
     is_jumping(false),
     can_jump(false),
@@ -79,6 +89,7 @@ void Dude::step( World& world ) {
                     can_jump = false;
                     release_jump_button = true;
                     is_jumping = true;
+                    jump_sound.play();
                     velocity.y = -JUMP_ACCEL;
                 }
             } else {
@@ -123,6 +134,7 @@ void Dude::step( World& world ) {
             can_jump = false;
             release_jump_button = true;
             is_jumping = true;
+            jump_sound.play();
             velocity.y = -JUMP_ACCEL;
             sprite.setRotation(0);
         }

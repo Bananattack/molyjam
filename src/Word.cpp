@@ -28,7 +28,7 @@ namespace {
     }
 
     sf::Vector2f randomizeVelocity() {
-        float r = randf() * 2 * M_PI;
+        float r = -M_PI/2.0f + randf() *  M_PI;
         float mag = 2.0f;//2.0f + randf() * 4.0f;
         return sf::Vector2f(mag * sin(r), mag * -cos(r));
     }
