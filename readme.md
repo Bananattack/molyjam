@@ -1,7 +1,7 @@
 What if you could CLIMB text
 ===============================================
 
-*by Andrew Crowell ([@Bananattack](http://twitter.com/@Bananattack)), Luke Rewega ([@lrewega](http://twitter.com/lrewega)), and Bill Kiley (bill.kiley@gmail.com)*
+*by Andrew Crowell ([@Bananattack](http://twitter.com/Bananattack)), Luke Rewega ([@lrewega](http://twitter.com/lrewega)), and Bill Kiley (bill.kiley@gmail.com)*
 
 
 "What if everyone in the game had text constantly around them expressing their feelings? Now, imagine in this game you can CLIMB text?" -- Peter Molydeux
